@@ -9,8 +9,9 @@ public class Movie {
 	private String Title;
 	private String imdbVotes;
 	private String Type;
-	private double imdbRating;
+	private String imdbRating;
 	public String Poster;
+	
 	
 	
 	public String getID() { 
@@ -20,9 +21,15 @@ public class Movie {
 		return this.Title;
 	}
 	public double getimdbScore() throws ParseException { 
-		if (this.imdbVotes != "N/A") {
+		if (this.imdbVotes != "N/A" & this.imdbRating != "N/A") {
+			try {
 			int votes = NumberFormat.getNumberInstance(java.util.Locale.US).parse(this.imdbVotes).intValue();
-			return votes*this.imdbRating;
+			int rating = NumberFormat.getNumberInstance(java.util.Locale.US).parse(this.imdbRating).intValue();
+			return votes*rating;
+			}
+		catch (Exception e) {
+			return 0;
+		}
 		}
 		else
 		return 0;

@@ -1,22 +1,21 @@
 package com.teste.MoviesBattle;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import com.teste.MoviesBattle.Model.Player;
-
-import java.util.List;
-
-import com.teste.MoviesBattle.Model.Movie;
 import com.teste.MoviesBattle.Model.PlayerScore;
 
 
 
-
+//@Entity
 public class Match{
 
-	
+	@Id
 	protected int MatchId;
-	PlayerScore playerScore;
+	//PlayerScore playerScore;
 	Player player;
-	List<Movie> matchMovies;
+	//List<Movie> matchMovies;
 	
 	public Match(Player player) {
 		this.player = player;

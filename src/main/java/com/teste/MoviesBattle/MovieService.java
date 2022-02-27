@@ -3,9 +3,9 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import com.teste.MoviesBattle.Model.Movie;
-import com.teste.MoviesBattle.Util.Json;
+
 import com.google.gson.Gson;
+import com.teste.MoviesBattle.Model.Movie;
 
 public class MovieService extends Movie {
 	static String webService = "http://www.omdbapi.com/?";
@@ -21,22 +21,24 @@ public class MovieService extends Movie {
 			URL url = new URL(urlParaChamada);
 			HttpURLConnection conexao = (HttpURLConnection) url.openConnection();
 
-			if (conexao.getResponseCode() != codigoSucesso)
+			if (conexao.getResponseCode() != codigoSucesso) {
+				System.out.println(conexao.getResponseCode());
 				throw new RuntimeException("HTTP error code : " + conexao.getResponseCode());
+			}
 
 			BufferedReader resposta = new BufferedReader(new InputStreamReader((conexao.getInputStream())));
 			//String json = Json.converteJsonEmString(resposta);
 			Gson gson = new Gson(); // conversor
 			Movie movie = gson.fromJson(resposta, Movie.class);
-			if (movie.getType().equals("movie")) {
-				return movie;	
-			}
-			else
-				return null;
-						
+
+			return movie;
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			System.out.println(urlParaChamada);
 			throw new Exception("ERRO: " + e);
+			
 		}
+		
 		
 	}
 }
