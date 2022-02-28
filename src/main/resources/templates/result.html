@@ -54,12 +54,14 @@
         	  },
         	  body: id,
         	})
-        	  .then((response) => response.json())
+        	  .then((response) => response.text())
         	  .then((data) => {
-        	    console.log("Success: ", data);
+        	    alert(data);
+        	    location.reload();
         	  })
         	  .catch((error) => {
         	    console.error("Error: ", error);
+        	    location.reload();
         	  });
         }
         populate();

@@ -36,11 +36,11 @@ public class MatchController {
 		int value = Integer.parseInt(choice);
 		String result;
 		if (MatchResult(movies, value)) {
-			result ="Right";
+			result ="Você acertou!";
 			System.out.println(result);
 			return result;
 		} else {
-			result ="Wrong";
+			result ="Você errou!";
 			System.out.println(result);
 			return result ;
 			}
