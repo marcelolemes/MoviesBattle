@@ -1,5 +1,4 @@
 package com.teste.MoviesBattle;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,31 +13,38 @@ import org.springframework.web.bind.annotation.RestController;
 import com.teste.MoviesBattle.Model.Movie;
 
 @RestController
-//Mapeia as requisições de localhost:8080/match/
 @RequestMapping("/match")
 public class MatchController {
 	/*
 	 * @Autowired private MatchService matchService;
 	 */
-	List<Movie> movies;
+	public List<Movie> movies;
 
 	@GetMapping
 	public List<String> Get() throws Exception {
 		movies = MatchService.fetchMovies();
-		ArrayList<String> posters = new ArrayList<String>();
+		List<String> posters = new ArrayList<String>();
 		movies.forEach(n -> posters.add(n.Poster));
+		System.out.println(posters);
 		return posters;
 	}
 
 	@PostMapping
 	@ResponseBody
 	public String Result(@RequestBody String choice) throws Exception {
+		choice = choice.substring(0, 1);
 		int value = Integer.parseInt(choice);
-		System.out.println(value);
+		String result;
 		if (MatchResult(movies, value)) {
-			return "Right";
-		} else
-			return "Wrong";
+			result ="Right";
+			System.out.println(result);
+			return result;
+		} else {
+			result ="Wrong";
+			System.out.println(result);
+			return result ;
+			}
+		
 	}
 
 	public Boolean MatchResult(List<Movie> list, int i) throws ParseException {
@@ -59,7 +65,8 @@ public class MatchController {
 			}
 	
 		}
-		return null;
+		return false;
+		
 
 	}
 

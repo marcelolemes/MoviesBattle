@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Match!</title>
+</head>
+<body>
+	Match
+	
+	<section id='section' align="center">
+	</section>
+	<script>
+		const requestURL = 'http://localhost:8008/match';
+        async function populate() {
+        	const request = new Request(requestURL);
+            const response = await fetch(request);
+            const ReposText = await response.text();
+            images = JSON.parse(ReposText);
+            populateImages(images);
+          
+        }
+        function populateImages(obj) {
+        	let id = 1; 
+            const section = document.querySelector('section');
+            	for (img of obj) {
+            		const image = document.createElement('img');
+            		image.src = img;
+            		image.id = "img"+id;
+            		//image.onclick = choose(image.id);
+            		id++;
+            		section.appendChild(image)
+            		}
+            	
+            	const img1 = document.getElementById('img1')
+                img1.onclick = () => {
+                	send(img1.id[3]);
+                }
+                const img2 = document.getElementById('img2')
+                img2.onclick = () => {
+                	send(img2.id[3]);
+                  }
+            	}
+        
+        
+       
+        
+        function send(id){
+        	console.log(id);
+        	fetch(requestURL, {
+        	  method: "POST",
+        	  headers: {
+        	    "Content-Type": "application/text",
+        	  },
+        	  body: id,
+        	})
+        	  .then((response) => response.json())
+        	  .then((data) => {
+        	    console.log("Success: ", data);
+        	  })
+        	  .catch((error) => {
+        	    console.error("Error: ", error);
+        	  });
+        }
+        populate();
+        
+        
+    </script>
+</body>
+</html>
